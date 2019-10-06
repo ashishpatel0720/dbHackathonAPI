@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+import static com.db.dbhackathonapi.StatusCodeEnum.*;
+
 
 /*
 either you can use
@@ -30,11 +32,11 @@ public class AdminController {
 
 		if(u.isPresent()){
 			if(u.get().getPassword().equals(admin.getPassword()))
-		        return new Response(1,"Logged In.","You have successfully Signed In",u);
+		        return new Response(OK.getCode(),"Logged In.","You have successfully Signed In",u);
 			else
-				return new Response(2,"Wrong Password","Please re-enter password",null);
+				return new Response(WARNING.getCode(),"Wrong Password","Please re-enter password",null);
 		}
 		else
-			return new Response(0,"Admin Not Found","Please enter again",null);
+			return new Response(ERROR.getCode(),"Admin Not Found","Please enter again",null);
 	}
 }
