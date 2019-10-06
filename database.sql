@@ -45,7 +45,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `travelactivity`;
 /* table activities*/
-CREATE TABLE `travelactivity` (
+CREATE TABLE `travel_activity` (
                         `id` int auto_increment primary key ,
                         `user_email` text not null ,
                         `medium` text not null ,  # bike, cycling ,other etc.
@@ -54,10 +54,10 @@ CREATE TABLE `travelactivity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-LOCK TABLES `travelactivity` WRITE;
-/*!40000 ALTER TABLE `travelactivity` DISABLE KEYS */;
+LOCK TABLES `travel_activity` WRITE;
+/*!40000 ALTER TABLE `travel_activity` DISABLE KEYS */;
 
-INSERT INTO `travelactivity` ( `user_email`, `medium`, `contributors`, `ghg_footprint`)
+INSERT INTO `travel_activity` ( `user_email`, `medium`, `contributors`, `ghg_footprint`)
 VALUES
 ('ashish@db.com','bike','1','999'),
 ('ashish@db.com','bicycle','1','0');
