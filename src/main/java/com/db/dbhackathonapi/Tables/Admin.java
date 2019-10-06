@@ -15,8 +15,10 @@ import javax.persistence.Id;
 @Entity // This tells Hibernate to make a table out of this class
 public class Admin {
 
+    private int id;
+
     @Id
-    private String id;
+    private String email;
     private String name;
     private String password;
 

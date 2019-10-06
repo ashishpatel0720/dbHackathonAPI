@@ -28,7 +28,7 @@ public class AdminController {
  	@PostMapping("/login")
 	public Response login(@RequestBody Admin admin){
 
-		Optional<Admin>u=adminRepository.findById(admin.getId());
+		Optional<Admin>u=adminRepository.findById(admin.getEmail());
 
 		if(u.isPresent()){
 			if(u.get().getPassword().equals(admin.getPassword()))

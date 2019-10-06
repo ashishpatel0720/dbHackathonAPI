@@ -28,7 +28,7 @@ public class UserController {
 	@PostMapping("/login")
 	public Response login(@RequestBody User user){
 
-		Optional<User>u=userRepository.findById(user.getId());
+		Optional<User>u=userRepository.findById(user.getEmail());
 
 		if(u.isPresent()){
 			if(u.get().getPassword().equals(user.getPassword()))
