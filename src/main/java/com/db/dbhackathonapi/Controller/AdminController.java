@@ -32,11 +32,11 @@ public class AdminController {
 
 		if(u.isPresent()){
 			if(u.get().getPassword().equals(admin.getPassword()))
-		        return new Response(OK.getCode(),"Logged In.","You have successfully Signed In",u);
+		        return new Response(OK,"Logged In.","You have successfully Signed In",u);
 			else
-				return new Response(WARNING.getCode(),"Wrong Password","Please re-enter password",null);
+				return new Response(WARNING,"Wrong Password","Please re-enter password",null);
 		}
 		else
-			return new Response(ERROR.getCode(),"Admin Not Found","Please enter again",null);
+			return new Response(ERROR,"Admin Not Found","Please enter again",null);
 	}
 }

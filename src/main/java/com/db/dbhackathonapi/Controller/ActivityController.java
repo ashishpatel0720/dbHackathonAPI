@@ -34,7 +34,7 @@ public class ActivityController {
 
 		List<TravelActivity>activities=travelActivityRepository.findAllByUserEmail(userEmail);
 
-		return new Response(OK.getCode(),"Travel data","Travel Data has "+activities.size()+" rows",activities);
+		return new Response(OK,"Travel data","Travel Data has "+activities.size()+" rows",activities);
 	}
 
 	@CrossOrigin //Todo:
@@ -43,7 +43,7 @@ public class ActivityController {
 
 		List<String>activities= Arrays.asList("Travel");
 
-		return new Response(OK.getCode(),"Activity Types","Types of activities could be configured here, total "+activities.size()+" rows",activities);
+		return new Response(OK,"Activity Types","Types of activities could be configured here, total "+activities.size()+" rows",activities);
 	}
 
 	@CrossOrigin //Todo:
@@ -52,7 +52,7 @@ public class ActivityController {
 
 		List<String>activities= Arrays.asList("Bicycle", "Motor Bike","Car","Cab","Bus");
 
-		return new Response(OK.getCode(),"Activity Types","Types of Travel activities could be configured here, total "+activities.size()+" rows",activities);
+		return new Response(OK,"Activity Types","Types of Travel activities could be configured here, total "+activities.size()+" rows",activities);
 	}
 
 }
