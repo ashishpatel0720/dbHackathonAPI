@@ -43,7 +43,7 @@ VALUES
 UNLOCK TABLES;
 
 
-DROP TABLE IF EXISTS `travelactivity`;
+DROP TABLE IF EXISTS `travel_activity`;
 /* table activities*/
 CREATE TABLE `travel_activity` (
                         `id` int auto_increment primary key ,

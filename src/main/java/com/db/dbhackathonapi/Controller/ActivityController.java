@@ -28,7 +28,7 @@ public class ActivityController {
 	@Autowired
 	private TravelActivityRepository travelActivityRepository;
 
-	@CrossOrigin //Todo:
+	@CrossOrigin
  	@GetMapping(value = "/travel/{userEmail}")
 	public Response getTravelData( @PathVariable String userEmail){
 
@@ -37,7 +37,7 @@ public class ActivityController {
 		return new Response(OK,"Travel data","Travel Data has "+activities.size()+" rows",activities);
 	}
 
-	@CrossOrigin //Todo:
+	@CrossOrigin
 	@GetMapping(value = "/types")
 	public Response getActivityTypes( ){
 
@@ -46,7 +46,7 @@ public class ActivityController {
 		return new Response(OK,"Activity Types","Types of activities could be configured here, total "+activities.size()+" rows",activities);
 	}
 
-	@CrossOrigin //Todo:
+	@CrossOrigin
 	@GetMapping(value = "/types/travel")
 	public Response getTravelActivityTypes( ){
 

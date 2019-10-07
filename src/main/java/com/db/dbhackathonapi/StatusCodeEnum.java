@@ -1,5 +1,9 @@
 package com.db.dbhackathonapi;
 
+
+import lombok.Getter;
+
+@Getter
 public enum StatusCodeEnum {
         OK(1),
         ERROR(0),
@@ -11,7 +15,4 @@ public enum StatusCodeEnum {
                 this.code=code;
         }
 
-        public int getCode(){
-                 return this.code;
-        }
 }
