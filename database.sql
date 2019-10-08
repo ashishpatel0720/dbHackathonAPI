@@ -8,7 +8,8 @@ CREATE TABLE `admin` (
                          `id` int auto_increment primary key ,
                          `email` text not null ,
                          `name` text not null ,
-                         `password` text not null
+                         `password` text not null,
+                         `timestamp` TIMESTAMP default current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `admin` WRITE;
@@ -26,7 +27,8 @@ CREATE TABLE `user` (
                         `id` int auto_increment primary key ,
                         `email` text not null ,
                         `name` text not null ,
-                        `password` text not null
+                        `password` text not null,
+                        `timestamp` TIMESTAMP default current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -51,7 +53,8 @@ CREATE TABLE `travel_activity` (
                         `medium` text not null ,  # bike, cycling ,other etc.
                         `distance` int not null ,
                         `contributors` int not null, # 1 for 100 % etc - ghg_footprint/contribution
-                        `ghg_footprint` int not null
+                        `ghg_footprint` int not null,
+                        `timestamp` TIMESTAMP default current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 UNLOCK TABLES;
 
@@ -74,7 +77,8 @@ CREATE TABLE `green_activity` (
                         `id` int auto_increment primary key ,
                         `user_email` text not null ,
                         `type` text not null ,
-                        `ghg_footprint` int not null
+                        `ghg_footprint` int not null,
+                        `timestamp` TIMESTAMP default current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `green_activity` WRITE;
@@ -101,7 +105,8 @@ CREATE TABLE `electricity_consumption` (
                                   `appliance_type` text not null ,
                                   `duration_minutes` text not null ,
                                   `contributors` text not null ,
-                                  `ghg_footprint` int not null
+                                  `ghg_footprint` int not null,
+                                  `timestamp` TIMESTAMP default current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `electricity_consumption` WRITE;
