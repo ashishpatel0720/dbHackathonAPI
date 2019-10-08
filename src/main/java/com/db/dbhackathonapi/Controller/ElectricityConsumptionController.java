@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import static com.db.dbhackathonapi.StatusCodeEnum.ERROR;
-import static com.db.dbhackathonapi.StatusCodeEnum.OK;
+import static com.db.dbhackathonapi.StatusCodeEnum.*;
 
 
 /*
@@ -71,6 +71,12 @@ public class ElectricityConsumptionController {
 	public Response modifyActivity(@RequestBody ElectricityConsumption electricityConsumption) {
 
 		System.out.println(electricityConsumption);
+
+		Optional<ElectricityConsumption> u=electricityConsumptionRepository.findById(electricityConsumption.getId());
+
+		if(!u.isPresent())
+			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+electricityConsumption.getId(),null);
+
 		try {
 			electricityConsumptionRepository.modifyUserInfoById(
 					electricityConsumption.getApplianceType(),
@@ -90,6 +96,12 @@ public class ElectricityConsumptionController {
 	@PostMapping("/delete")
 	public Response deleteActivity(@RequestBody ElectricityConsumption electricityConsumption) {
 		System.out.println(electricityConsumption);
+
+		Optional<ElectricityConsumption> u=electricityConsumptionRepository.findById(electricityConsumption.getId());
+
+		if(!u.isPresent())
+			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+electricityConsumption.getId(),null);
+
 		try {
 			electricityConsumptionRepository.deleteById(electricityConsumption.getId());
 			return new Response(OK, "Deleted", "Electricity Consumption Deleted", electricityConsumption);

@@ -3,15 +3,16 @@ package com.db.dbhackathonapi.Controller;
 
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
 import com.db.dbhackathonapi.Tables.TravelActivity;
+import com.db.dbhackathonapi.Tables.User;
 import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-import static com.db.dbhackathonapi.StatusCodeEnum.ERROR;
-import static com.db.dbhackathonapi.StatusCodeEnum.OK;
+import static com.db.dbhackathonapi.StatusCodeEnum.*;
 
 
 /*
@@ -64,6 +65,11 @@ public class TravelActivityController {
 	public Response modifyActivity(@RequestBody TravelActivity travelActivity) {
 
 		System.out.println(travelActivity);
+		Optional<TravelActivity> u=travelActivityRepository.findById(travelActivity.getId());
+		if(!u.isPresent()) {
+			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+travelActivity.getId(),null);
+		}
+
 		try {
 			travelActivityRepository.modifyUserInfoById(
 					travelActivity.getMedium(),
@@ -82,6 +88,10 @@ public class TravelActivityController {
 	@CrossOrigin
 	@PostMapping("/delete")
 	public Response deleteActivity(@RequestBody TravelActivity travelActivity) {
+		Optional<TravelActivity> u=travelActivityRepository.findById(travelActivity.getId());
+		if(!u.isPresent()) {
+			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+travelActivity.getId(),null);
+		}
 		try {
 			travelActivityRepository.deleteById(travelActivity.getId());
 			return new Response(OK, "Deleted", "Travel Activity Deleted", travelActivity);
