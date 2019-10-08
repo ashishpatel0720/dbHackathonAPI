@@ -19,7 +19,8 @@ public class TravelActivity {
 
     private String userEmail;
     private String medium;
-    private String contributors;
-    private String ghgFootprint;
+    private int distance;
+    private int contributors;
+    private int ghgFootprint;
 
 }
