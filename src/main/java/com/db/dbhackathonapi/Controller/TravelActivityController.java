@@ -26,21 +26,25 @@ public class TravelActivityController {
 	private TravelActivityRepository travelActivityRepository;
 
 	@CrossOrigin
- 	@GetMapping(value = "/{userEmail}")
+	@GetMapping(value = "/{userEmail}")
 	public Response getTravelData( @PathVariable String userEmail){
-
-		List<TravelActivity>activities=travelActivityRepository.findAllByUserEmail(userEmail);
-
-		return new Response(OK,"Travel data","Travel Data has "+activities.size()+" rows",activities);
+		try{
+			List<TravelActivity>activities=travelActivityRepository.findAllByUserEmail(userEmail);
+			return new Response(OK,"Travel data","Travel Data has "+activities.size()+" rows",activities);
+		}catch (Exception e){
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+		}
 	}
 
 	@CrossOrigin
 	@GetMapping(value = "/types")
 	public Response getTravelActivityTypes( ){
-
-		List<String>activities= Arrays.asList("Bicycle", "Motor Bike","Car","Cab","Bus");
-
-		return new Response(OK,"Travel Activity Types","Types of Travel activities could be configured here, total "+activities.size()+" rows",activities);
+		try{
+			List<String>activities= Arrays.asList("Bicycle", "Motor Bike","Car","Cab","Bus","Other");
+			return new Response(OK,"Travel Activity Types","Types of Travel activities could be configured here, total "+activities.size()+" rows",activities);
+		}catch (Exception e){
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+		}
 	}
 
 	@CrossOrigin
@@ -79,7 +83,7 @@ public class TravelActivityController {
 	@PostMapping("/delete")
 	public Response deleteActivity(@RequestBody TravelActivity travelActivity) {
 		try {
-			travelActivityRepository.delete(travelActivity);
+			travelActivityRepository.deleteById(travelActivity.getId());
 			return new Response(OK, "Deleted", "Travel Activity Deleted", travelActivity);
 		} catch (Exception e) {
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), travelActivity);

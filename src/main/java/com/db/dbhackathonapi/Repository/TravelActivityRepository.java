@@ -12,7 +12,7 @@ import java.util.List;
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
 
-public interface TravelActivityRepository extends CrudRepository<TravelActivity, String> {
+public interface TravelActivityRepository extends CrudRepository<TravelActivity, Integer> {
 
     List<TravelActivity> findAllByUserEmail(@Param("userEmail") String userEmail);
 
