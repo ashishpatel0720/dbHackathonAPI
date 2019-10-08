@@ -1,20 +1,16 @@
 package com.db.dbhackathonapi.Controller;
 
 
-import com.db.dbhackathonapi.Repository.AdminRepository;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
-import com.db.dbhackathonapi.Tables.Admin;
 import com.db.dbhackathonapi.Tables.TravelActivity;
-import com.db.dbhackathonapi.Tables.User;
 import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
-import static com.db.dbhackathonapi.StatusCodeEnum.*;
+import static com.db.dbhackathonapi.StatusCodeEnum.OK;
 
 
 /*
