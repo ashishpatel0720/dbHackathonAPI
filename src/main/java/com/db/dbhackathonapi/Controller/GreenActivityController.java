@@ -22,7 +22,7 @@ either you can use
  */
 
 @RestController    // This means that this class is a Controller
-@RequestMapping(path="/activities/green") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/activities/green-activity") // This means URL's start with /demo (after Application path)
 public class GreenActivityController {
 
 	@Autowired
