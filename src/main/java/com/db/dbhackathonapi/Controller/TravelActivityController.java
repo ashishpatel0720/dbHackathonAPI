@@ -1,6 +1,7 @@
 package com.db.dbhackathonapi.Controller;
 
 
+import com.db.dbhackathonapi.Constants;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
 import com.db.dbhackathonapi.Tables.TravelActivity;
 import com.db.dbhackathonapi.Tables.User;
@@ -41,7 +42,7 @@ public class TravelActivityController {
 	@GetMapping(value = "/types")
 	public Response getTravelActivityTypes( ){
 		try{
-			List<String>activities= Arrays.asList("Bicycle", "Motor Bike","Car","Cab","Bus","Other");
+			List<String>activities= Constants.travelActivityList;
 			return new Response(OK,"Travel Activity Types","Types of Travel activities could be configured here, total "+activities.size()+" rows",activities);
 		}catch (Exception e){
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);

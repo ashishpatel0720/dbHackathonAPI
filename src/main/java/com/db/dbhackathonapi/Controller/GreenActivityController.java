@@ -1,6 +1,7 @@
 package com.db.dbhackathonapi.Controller;
 
 
+import com.db.dbhackathonapi.Constants;
 import com.db.dbhackathonapi.Repository.GreenActivityRepository;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
 import com.db.dbhackathonapi.Tables.GreenActivity;
@@ -42,7 +43,7 @@ public class GreenActivityController {
 	@GetMapping(value = "/types")
 	public Response getGreenActivityTypes( ){
 		try{
-			List<String>activities= Arrays.asList("Planted a Tree", "Used Public Transport","Used Paper Bags","Shared a Cab");
+			List<String>activities= Constants.greenActivityList;
 			return new Response(OK,"Green Activity Types","Types of Green activities could be configured here, total "+activities.size()+" rows",activities);
 		}catch (Exception e){
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);

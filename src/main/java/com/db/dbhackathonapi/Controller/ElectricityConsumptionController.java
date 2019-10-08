@@ -1,6 +1,7 @@
 package com.db.dbhackathonapi.Controller;
 
 
+import com.db.dbhackathonapi.Constants;
 import com.db.dbhackathonapi.Repository.ElectricityConsumptionRepository;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
 import com.db.dbhackathonapi.Tables.ElectricityConsumption;
@@ -45,7 +46,7 @@ public class ElectricityConsumptionController {
 	@GetMapping(value = "/types")
 	public Response getTravelActivityTypes( ){
 		try{
-			List<String>activities= Arrays.asList("Fridge", "Ac","Washing Machine","Geyser","Other");
+			List<String>activities= Constants.electricApplianceList;
 
 			return new Response(OK,"Electricity Consumption Types","Types of Electricity Consumption could be configured here, total "+activities.size()+" rows",activities);
 		}catch (Exception e){

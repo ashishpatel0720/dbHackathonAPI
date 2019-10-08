@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 
 @ToString
@@ -21,5 +22,6 @@ public class User {
     private String email;
     private String name;
     private String password;
+    private Timestamp timestamp;
 
 }
