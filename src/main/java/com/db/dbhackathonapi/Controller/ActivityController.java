@@ -11,12 +11,13 @@ import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.*;
+import java.util.stream.Stream;
 
 import static com.db.dbhackathonapi.StatusCodeEnum.*;
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
 
 
 /*
@@ -50,6 +51,18 @@ public class ActivityController {
 		}
 	}
 
+	@CrossOrigin
+	@GetMapping(value = "/score/{userEmail}") //monthly score
+	public Response getAverageScore(@PathVariable String userEmail){
+		try{
+			//find activities this month
+			// calculate score
+			// return back the response
+			return new Response(OK,"All Activity Score","All Activity Score ",100);
+		}catch (Exception e){
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+		}
+	}
 	@CrossOrigin
 	@GetMapping(value = "/types")
 	public Response getAllActivityTypes( ){
