@@ -6,8 +6,7 @@
     <groupId>com.db</groupId>
     <artifactId>dbHackathonAPI</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-<!--    <packaging>jar</packaging>-->
-    <packaging>war</packaging>
+   <packaging>jar</packaging>
 
     <name>FrontrunnerAPI</name>
     <description>Deutsche Bank Compliance FrontRunning Detector</description>
