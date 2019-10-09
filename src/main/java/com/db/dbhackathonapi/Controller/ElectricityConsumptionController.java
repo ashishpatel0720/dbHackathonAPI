@@ -10,7 +10,9 @@ import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,9 +59,8 @@ public class ElectricityConsumptionController {
 	@CrossOrigin
 	@PostMapping("/add")
 	public Response addActivity(@RequestBody ElectricityConsumption electricityConsumption) {
-
-
 		try {
+			electricityConsumption.setTimestamp(new Timestamp(new Date().getTime()));
 			ElectricityConsumption activity = electricityConsumptionRepository.save(electricityConsumption);
 			return new Response(OK, "Added .", "Electricity Consumption Added", activity);
 		} catch (Exception e) {
