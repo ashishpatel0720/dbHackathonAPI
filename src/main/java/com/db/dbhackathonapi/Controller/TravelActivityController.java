@@ -54,6 +54,7 @@ public class TravelActivityController {
 	public Response addActivity(@RequestBody TravelActivity travelActivity) {
 
 		try {
+			travelActivity.setGhgFootprint(calculateGHG(travelActivity));
 			TravelActivity activity = travelActivityRepository.save(travelActivity);
 			return new Response(OK, "Added .", "Travel Activity Added", activity);
 		} catch (Exception e) {
@@ -61,17 +62,23 @@ public class TravelActivityController {
 		}
 	}
 
+	private int calculateGHG(TravelActivity travelActivity) {
+		return 0;
+	}
+
 	@CrossOrigin
 	@PostMapping("/modify")
 	public Response modifyActivity(@RequestBody TravelActivity travelActivity) {
 
 		System.out.println(travelActivity);
+
 		Optional<TravelActivity> u=travelActivityRepository.findById(travelActivity.getId());
 		if(!u.isPresent()) {
 			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+travelActivity.getId(),null);
 		}
 
 		try {
+			travelActivity.setGhgFootprint(calculateGHG(travelActivity));
 			travelActivityRepository.modifyUserInfoById(
 					travelActivity.getMedium(),
 					travelActivity.getContributors(),
@@ -84,7 +91,30 @@ public class TravelActivityController {
 		} catch (Exception e) {
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), travelActivity);
 		}
+}
+
+private Optional<TravelActivity> getValidUser(TravelActivity travelActivity)
+{
+	Optional<TravelActivity> u=travelActivityRepository.findById(travelActivity.getId());
+		return u;
+}
+
+
+	@CrossOrigin
+	@PostMapping("/getTravelAvgScore")
+	public Response getTravelAvgScore(@RequestBody TravelActivity travelActivity) {
+		Optional<TravelActivity> u=getValidUser(travelActivity);
+		if(!u.isPresent()) {
+			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+travelActivity.getId(),null);
+		}
+		try {
+			return new Response(OK, "Deleted", "Travel score value", u);
+		} catch (Exception e) {
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), u);
+		}
 	}
+
+
 
 	@CrossOrigin
 	@PostMapping("/delete")

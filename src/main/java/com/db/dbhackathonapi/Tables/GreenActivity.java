@@ -21,7 +21,7 @@ public class GreenActivity extends Activity {
 
     private String userEmail;
     private String type;
-    private int ghgFootprint;
+    private String suggestedPlantScore;
     private Timestamp timestamp;
 
 

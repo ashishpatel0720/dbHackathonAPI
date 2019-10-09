@@ -60,11 +60,33 @@ public class ElectricityConsumptionController {
 
 
 		try {
+			electricityConsumption.setGhgFootprint(calculateGHG(electricityConsumption));
 			ElectricityConsumption activity = electricityConsumptionRepository.save(electricityConsumption);
 			return new Response(OK, "Added .", "Electricity Consumption Added", activity);
 		} catch (Exception e) {
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
 		}
+	}
+
+	@CrossOrigin
+	@PostMapping("/getAvgElecScore")
+	public Response getAvgElecScore(@RequestBody ElectricityConsumption electricityConsumption) {
+
+
+		Optional<ElectricityConsumption> u=electricityConsumptionRepository.findById(electricityConsumption.getId());
+
+		if(!u.isPresent())
+			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+electricityConsumption.getId(),null);
+			try{
+				return new Response(OK, "Modified .", "Electricity Consumption Modified", electricityConsumption);
+			} catch (Exception e) {
+				return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), electricityConsumption);
+			}
+
+	}
+
+	private int calculateGHG(ElectricityConsumption electricityConsumption) {
+		return 0;
 	}
 
 	@CrossOrigin
@@ -79,6 +101,7 @@ public class ElectricityConsumptionController {
 			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+electricityConsumption.getId(),null);
 
 		try {
+			electricityConsumption.setGhgFootprint(calculateGHG(electricityConsumption));
 			electricityConsumptionRepository.modifyUserInfoById(
 					electricityConsumption.getApplianceType(),
 					electricityConsumption.getDurationMinutes(),

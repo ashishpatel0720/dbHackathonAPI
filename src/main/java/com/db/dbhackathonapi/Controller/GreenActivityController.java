@@ -55,12 +55,20 @@ public class GreenActivityController {
 	public Response addActivity(@RequestBody GreenActivity greenActivity) {
 
 		try {
+			greenActivity.setSuggestedPlantScore(calPlantScore(greenActivity));
 			GreenActivity activity = greenActivityRepository.save(greenActivity);
 			return new Response(OK, "Added .", "Green Activity Added", activity);
 		} catch (Exception e) {
 			return new Response(ERROR, "Error", Arrays.toString(e.getStackTrace()), null);
 		}
 	}
+
+
+	private String calPlantScore(GreenActivity greenActivity) {
+		//r=cal
+		return null;
+	}
+
 
 	@CrossOrigin
 	@PostMapping("/modify")
@@ -73,11 +81,12 @@ public class GreenActivityController {
 		}
 
 		try {
+			greenActivity.setSuggestedPlantScore(calPlantScore(greenActivity));
 			greenActivityRepository.modifyUserInfoById(
+					greenActivity.getUserEmail(),
 					greenActivity.getType(),
-					greenActivity.getGhgFootprint(),
-					greenActivity.getId()
-			);
+					greenActivity.getSuggestedPlantScore(),
+					greenActivity.getId());
 
 			return new Response(OK, "Modified .", "Green Activity Modified", greenActivity);
 		} catch (Exception e) {

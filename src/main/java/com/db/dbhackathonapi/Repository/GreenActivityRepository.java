@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
@@ -19,8 +20,8 @@ public interface GreenActivityRepository extends CrudRepository<GreenActivity, I
 
     @Transactional
     @Modifying
-    @Query(value="update green_activity t set t.type=:type, t.ghg_footprint=:ghg_footprint where t.id=:id",nativeQuery = true)
-    void modifyUserInfoById(@Param("type") String type,   @Param("ghg_footprint") int ghg_footprint, @Param("id") int id);
+    @Query(value="update green_activity t set t.userEmail=:userEmail, t.type =:type, t.suggestedPlantScore=:suggestedPlantScore where t.id=:id",nativeQuery = true)
+    void modifyUserInfoById(@Param("userEmail") String userEmail, @Param("type") String type,   @Param("suggestedPlantScore") String suggestedPlantScore, @Param("id") int id);
 
 
 }
