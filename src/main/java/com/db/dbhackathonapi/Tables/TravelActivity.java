@@ -22,7 +22,7 @@ public class TravelActivity extends Activity {
     private String userEmail;
     private String medium;
     private String fuelType;
-    private int distance;
+    private String distance;
     private int contributors;
     private String ghgFootprint;
     private Timestamp timestamp;

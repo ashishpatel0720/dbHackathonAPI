@@ -92,9 +92,10 @@ public class ElectricityConsumptionController {
 
     private String calculateGHG(ElectricityConsumption electricityConsumption) {
 
-        Map<String,String > map = utils.getMapFactors("applianceFactors");
-        float ghgValue = ((Integer.parseInt(map.get(electricityConsumption.getApplianceType())) *
-                (electricityConsumption.getDurationMinutes()/60))/electricityConsumption.getContributors())* 0.5452f;
+        Map<String,String > applianceFactors = utils.getMapFactors("applianceFactors");
+        String applianceType = electricityConsumption.getApplianceType() !=null ?electricityConsumption.getApplianceType().toUpperCase():"OTHER";
+        float ghgValue = ((Float.parseFloat(applianceFactors.get(applianceType)) *
+                (Float.parseFloat(electricityConsumption.getDurationMinutes())/60))/electricityConsumption.getContributors())* 0.5452f;
 
         return String.valueOf(ghgValue);
     }

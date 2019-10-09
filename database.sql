@@ -52,7 +52,7 @@ CREATE TABLE `travel_activity` (
                         `user_email` text not null ,
                         `medium` text not null ,  # bike, cycling ,other etc.
                         `fuel_type` text null ,  # petrol, diesel ,other etc.
-                        `distance` int not null ,
+                        `distance` text not null ,
                         `contributors` int not null, # 1 for 100 % etc - ghg_footprint/contribution
                         `ghg_footprint` text null,
                         `timestamp` TIMESTAMP default current_timestamp
@@ -78,7 +78,7 @@ CREATE TABLE `green_activity` (
                         `id` int auto_increment primary key ,
                         `user_email` text not null ,
                         `type` text not null ,
-                        `suggestedPlantScore` text null,
+                        `suggested_plant_score` text null,
                         `timestamp` TIMESTAMP default current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

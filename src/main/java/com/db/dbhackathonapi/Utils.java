@@ -22,25 +22,25 @@ public class Utils {
             metaData.put("DIESEL", "2.672");
             metaData.put("KEROSENE", "2.5421");
             metaData.put("LPG", "1.492");
-            metaData.put("Other", "0.5452");
+            metaData.put("OTHER", "0.5452");
             return metaData;
         } else if (factorName.equalsIgnoreCase("applianceFactors")) {
-            applianceFactors.put("Fridge", "1");
+            applianceFactors.put("FRIDGE", "1");
             applianceFactors.put("AC", "1");
-            applianceFactors.put("Washing Machine", "1");
-            applianceFactors.put("Geyser", "1");
-            applianceFactors.put("other", "1");
+            applianceFactors.put("WASHING MACHINE", "1");
+            applianceFactors.put("GEYSER", "1");
+            applianceFactors.put("OTHER", "1");
             return applianceFactors;
         }
         else if (factorName.equalsIgnoreCase("travelMedium")) {
 
-            travelMedium.put("Bicycle", "1");
-            travelMedium.put("Motor Bike", "1");
-            travelMedium.put("Car", "1");
-            travelMedium.put("Flight", "1");
-            travelMedium.put("Cab", "1");
-            travelMedium.put("Bus", "1");
-            travelMedium.put("Other", "1");
+            travelMedium.put("BICYCLE", "1");
+            travelMedium.put("BIKE", "1");
+            travelMedium.put("CAR", "1");
+            travelMedium.put("FLIGHT", "1");
+            travelMedium.put("CAB", "1");
+            travelMedium.put("BUS", "1");
+            travelMedium.put("OTHER", "1");
             return travelMedium;
         }
         return null;

@@ -19,7 +19,7 @@ public interface TravelActivityRepository extends CrudRepository<TravelActivity,
     @Transactional
     @Modifying
     @Query(value="update travel_activity t set t.medium=:medium, t.distance =:distance, t.contributors =:contributors , t.ghg_footprint=:ghg_footprint where t.id=:id",nativeQuery = true)
-    void modifyUserInfoById(@Param("medium") String medium, @Param("contributors") int contributors,@Param("distance") int distance, @Param("ghg_footprint") String ghg_footprint, @Param("id") int id);
+    void modifyUserInfoById(@Param("medium") String medium, @Param("contributors") int contributors,@Param("distance") String distance, @Param("ghg_footprint") String ghg_footprint, @Param("id") int id);
 
 //    @Query(value="select id,user_email,medium,distance,contributors,ghg_footprint from travel_activity t where t.id=:activityId",nativeQuery = true)
 //    void findByActivityId(@Param("activityId") String activityId);

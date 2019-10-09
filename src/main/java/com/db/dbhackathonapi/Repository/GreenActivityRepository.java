@@ -20,7 +20,7 @@ public interface GreenActivityRepository extends CrudRepository<GreenActivity, I
 
     @Transactional
     @Modifying
-    @Query(value="update green_activity t set t.userEmail=:userEmail, t.type =:type, t.suggestedPlantScore=:suggestedPlantScore where t.id=:id",nativeQuery = true)
+    @Query(value="update green_activity t set t.user_email=:userEmail, t.type =:type, t.suggested_plant_score=:suggestedPlantScore where t.id=:id",nativeQuery = true)
     void modifyUserInfoById(@Param("userEmail") String userEmail, @Param("type") String type,   @Param("suggestedPlantScore") String suggestedPlantScore, @Param("id") int id);
 
 

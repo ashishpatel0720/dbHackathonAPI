@@ -74,7 +74,10 @@ public class GreenActivityController {
     private String calPlantScore(GreenActivity greenActivity) {
         Optional<TravelActivity> travelActivity = travelActivityRepository.findById(greenActivity.getId());
         Optional<ElectricityConsumption> electricityConsumption = electricityConsumptionRepository.findById(greenActivity.getId());
-        float plantScore = (Integer.parseInt(travelActivity.get().getGhgFootprint()) + Integer.parseInt(electricityConsumption.get().getGhgFootprint())) / 5;
+
+        float plantScore = ((travelActivity.isPresent() && travelActivity.get() != null && travelActivity.get().getGhgFootprint() !=null ? Float.parseFloat(travelActivity.get().getGhgFootprint()) : 0) +
+                             (electricityConsumption.isPresent() && electricityConsumption.get() != null && electricityConsumption.get().getGhgFootprint() !=null  ? Float.parseFloat(electricityConsumption.get().getGhgFootprint()) : 0)) / 5;
+
         return String.valueOf(plantScore);
     }
 

@@ -35,7 +35,7 @@ public class TravelActivityController {
 	@GetMapping(value = "/{userEmail}")
 	public Response getTravelData( @PathVariable String userEmail){
 		try{
-			List<TravelActivity>activities=travelActivityRepository.findAllByUserEmail(userEmail);
+			List<TravelActivity> activities = travelActivityRepository.findAllByUserEmail(userEmail);
 			return new Response(OK,"Travel data","Travel Data has "+activities.size()+" rows",activities);
 		}catch (Exception e){
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
@@ -98,17 +98,12 @@ public class TravelActivityController {
         Map<String,String> applianceFactorsMap = utils.getMapFactors("metaData");
         Map<String,String> travelMediumMap = utils.getMapFactors("travelMedium");
         float ghgValue = 0.0f;
-        if(applianceFactorsMap.get(travelActivity.getFuelType()).isEmpty())
-        {
-            ghgValue = (Integer.parseInt(travelMediumMap.get(travelActivity.getMedium()))*travelActivity.getDistance())/travelActivity.getContributors() / 908;
-        }
-        else {
-            if(applianceFactorsMap.get(travelActivity.getFuelType()).equalsIgnoreCase("petrol"))
-            {
-            ghgValue = ((Integer.parseInt(travelMediumMap.get(travelActivity.getMedium()))*travelActivity.getDistance())/travelActivity.getContributors()
-                        * Integer.parseInt(applianceFactorsMap.get(travelActivity.getFuelType())) )/ 908;
-            }
-        }
+        String travelFuelType = travelActivity.getFuelType()!=null ? travelActivity.getFuelType().toUpperCase(): "OTHER";
+        String travelMedium = travelActivity.getMedium()!=null ? travelActivity.getMedium().toUpperCase(): "OTHER";
+
+        ghgValue = ((Float.parseFloat(travelMediumMap.get(travelMedium))* Float.parseFloat(travelActivity.getDistance()))/travelActivity.getContributors()
+                        * Float.parseFloat(applianceFactorsMap.get(travelFuelType)))/ 908;
+
         return String.valueOf(ghgValue);
 		}
 
