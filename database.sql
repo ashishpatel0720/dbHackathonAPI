@@ -72,12 +72,6 @@ VALUES
 UNLOCK TABLES;
 
 
- private int id;
-
-    private String userEmail;
-    private String suggestedPlantScore;
-    private Timestamp timestamp;
-
 DROP TABLE IF EXISTS `green_activity`;
 /* table activities */
 CREATE TABLE `green_activity` (
