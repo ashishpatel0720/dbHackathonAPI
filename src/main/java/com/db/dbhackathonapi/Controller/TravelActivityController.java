@@ -5,12 +5,14 @@ import com.db.dbhackathonapi.Constants;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
 import com.db.dbhackathonapi.Tables.TravelActivity;
 import com.db.dbhackathonapi.Tables.User;
+import com.db.dbhackathonapi.Utils;
 import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.db.dbhackathonapi.StatusCodeEnum.*;
@@ -26,6 +28,8 @@ public class TravelActivityController {
 
 	@Autowired
 	private TravelActivityRepository travelActivityRepository;
+    @Autowired
+    private Utils utils;
 
 	@CrossOrigin
 	@GetMapping(value = "/{userEmail}")
@@ -62,9 +66,51 @@ public class TravelActivityController {
 		}
 	}
 
-	private int calculateGHG(TravelActivity travelActivity) {
-		return 0;
-	}
+	private String calculateGHG(TravelActivity travelActivity) {
+
+    /*petrol - 2.322 kgCO2/ltre
+  car - petrol
+    distance  - 5000 km/yr
+    avg 15 km/lt =applianceFactor
+            ltres = 5000/15 = 333.33 ltrs
+
+    car disel
+    avg 20 km/ltre
+
+
+    petrol - 30 ltres
+    emission - 300 * 2.322 = 696.6 kgCO2
+    in tonnes = 696.6 /908 = 0.767 ----> ans
+
+0.767 + 0.2 +0.7+ 0.9+10=red
+
+
+            treesrequired = tonnes / 5
+    mintu = 2.45 tonnes
+    no of trees for mintu = 2.45/5 = 0.49 trees per year = green
+*/
+/*
+        private String medium;
+        private int distance;
+        private int contributors;
+*/
+
+        Map<String,String> applianceFactorsMap = utils.getMapFactors("metaData");
+        Map<String,String> travelMediumMap = utils.getMapFactors("travelMedium");
+        float ghgValue = 0.0f;
+        if(applianceFactorsMap.get(travelActivity.getFuelType()).isEmpty())
+        {
+            ghgValue = (Integer.parseInt(travelMediumMap.get(travelActivity.getMedium()))*travelActivity.getDistance())/travelActivity.getContributors() / 908;
+        }
+        else {
+            if(applianceFactorsMap.get(travelActivity.getFuelType()).equalsIgnoreCase("petrol"))
+            {
+            ghgValue = ((Integer.parseInt(travelMediumMap.get(travelActivity.getMedium()))*travelActivity.getDistance())/travelActivity.getContributors()
+                        * Integer.parseInt(applianceFactorsMap.get(travelActivity.getFuelType())) )/ 908;
+            }
+        }
+        return String.valueOf(ghgValue);
+		}
 
 	@CrossOrigin
 	@PostMapping("/modify")

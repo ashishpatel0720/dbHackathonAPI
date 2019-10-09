@@ -5,6 +5,7 @@ import com.db.dbhackathonapi.Constants;
 import com.db.dbhackathonapi.Repository.ElectricityConsumptionRepository;
 import com.db.dbhackathonapi.Repository.GreenActivityRepository;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
+import com.db.dbhackathonapi.Tables.ElectricityConsumption;
 import com.db.dbhackathonapi.Tables.TravelActivity;
 import com.db.dbhackathonapi.interfaces.Activity;
 import com.db.dbhackathonapi.response.Response;
@@ -52,13 +53,18 @@ public class ActivityController {
 	}
 
 	@CrossOrigin
-	@GetMapping(value = "/score/{userEmail}") //monthly score
-	public Response getAverageScore(@PathVariable String userEmail){
+	@GetMapping(value = "/score/{id}") //monthly score
+	public Response getAverageScore(@PathVariable int id){
 		try{
 			//find activities this month
 			// calculate score
 			// return back the response
-			return new Response(OK,"All Activity Score","All Activity Score ",100);
+
+			Optional<TravelActivity> travelActivity = travelActivityRepository.findById(id);
+			Optional<ElectricityConsumption> electricityConsumption = electricityConsumptionRepository.findById(id);
+			float plantScore = Integer.parseInt(travelActivity.get().getGhgFootprint()) + Integer.parseInt(electricityConsumption.get().getGhgFootprint());
+
+			return new Response(OK,"All Activity Score","All Activity Score ", plantScore);
 		}catch (Exception e){
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
 		}
@@ -76,4 +82,5 @@ public class ActivityController {
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
 		}
 	}
+
 }

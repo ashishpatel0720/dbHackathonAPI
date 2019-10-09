@@ -23,7 +23,7 @@ public class ElectricityConsumption extends Activity {
     private String applianceType;
     private int durationMinutes;
     private int contributors;
-    private int ghgFootprint;
+    private String ghgFootprint;
     private Timestamp timestamp;
 
 
