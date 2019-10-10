@@ -88,9 +88,9 @@ LOCK TABLES `green_activity` WRITE;
 
 INSERT INTO `green_activity` ( `user_email`, `type`)
 VALUES
-('ashish@db.com','used-public-transport'),
-('ashish@db.com','used-bicycle'),
-('ashish@db.com','planted-a-tree');
+('ashish.patel@db.com','used-public-transport'),
+('ashish.patel@db.com','used-bicycle'),
+('ashish.patel@db.com','planted-a-tree');
 
 /*!40000 ALTER TABLE `green_activity` ENABLE KEYS */;
 UNLOCK TABLES;
