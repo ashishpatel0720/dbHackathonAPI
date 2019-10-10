@@ -5,14 +5,12 @@ import com.db.dbhackathonapi.Constants;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
 import com.db.dbhackathonapi.Tables.TravelActivity;
 import com.db.dbhackathonapi.Tables.User;
-import com.db.dbhackathonapi.Utils;
 import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static com.db.dbhackathonapi.StatusCodeEnum.*;
@@ -59,10 +57,11 @@ public class TravelActivityController {
 
 		try {
 			travelActivity.setGhgFootprint(calculateGHG(travelActivity));
+			travelActivity.setTimestamp(new Timestamp(new Date().getTime()));
 			TravelActivity activity = travelActivityRepository.save(travelActivity);
 			return new Response(OK, "Added .", "Travel Activity Added", activity);
 		} catch (Exception e) {
-			return new Response(ERROR, "Error", Arrays.toString(e.getStackTrace()), null);
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
 		}
 	}
 
@@ -111,7 +110,6 @@ public class TravelActivityController {
 	public Response modifyActivity(@RequestBody TravelActivity travelActivity) {
 
 		System.out.println(travelActivity);
-
 		Optional<TravelActivity> u=travelActivityRepository.findById(travelActivity.getId());
 		if(!u.isPresent()) {
 			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+travelActivity.getId(),null);
@@ -132,7 +130,7 @@ public class TravelActivityController {
 		} catch (Exception e) {
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), travelActivity);
 		}
-}
+	}
 
 private Optional<TravelActivity> getValidUser(TravelActivity travelActivity)
 {

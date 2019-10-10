@@ -2,10 +2,8 @@ package com.db.dbhackathonapi.Controller;
 
 
 import com.db.dbhackathonapi.Constants;
-import com.db.dbhackathonapi.Repository.ElectricityConsumptionRepository;
 import com.db.dbhackathonapi.Repository.GreenActivityRepository;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
-import com.db.dbhackathonapi.Tables.ElectricityConsumption;
 import com.db.dbhackathonapi.Tables.GreenActivity;
 import com.db.dbhackathonapi.Tables.TravelActivity;
 import com.db.dbhackathonapi.response.Response;
@@ -63,10 +61,11 @@ public class GreenActivityController {
 
         try {
             greenActivity.setSuggestedPlantScore(calPlantScore(greenActivity));
+			greenActivity.setTimestamp(new Timestamp(new Date().getTime()));
             GreenActivity activity = greenActivityRepository.save(greenActivity);
             return new Response(OK, "Added .", "Green Activity Added", activity);
         } catch (Exception e) {
-            return new Response(ERROR, "Error", Arrays.toString(e.getStackTrace()), null);
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
         }
     }
 

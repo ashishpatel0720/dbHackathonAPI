@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static com.db.dbhackathonapi.StatusCodeEnum.*;
@@ -24,12 +23,11 @@ either you can use
  */
 
 @RestController    // This means that this class is a Controller
-@RequestMapping(path = "/activities/electricity-consumption")
-// This means URL's start with /demo (after Application path)
+@RequestMapping(path="/activities/electricity-consumption") // This means URL's start with /demo (after Application path)
 public class ElectricityConsumptionController {
 
-    @Autowired
-    private ElectricityConsumptionRepository electricityConsumptionRepository;
+	@Autowired
+	private ElectricityConsumptionRepository electricityConsumptionRepository;
     @Autowired
     private Utils utils;
 
@@ -53,19 +51,20 @@ public class ElectricityConsumptionController {
         try {
             List<String> activities = Constants.electricApplianceList;
 
-            return new Response(OK, "Electricity Consumption Types", "Types of Electricity Consumption could be configured here, total " + activities.size() + " rows", activities);
-        } catch (Exception e) {
-            return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
-        }
-    }
+			return new Response(OK,"Electricity Consumption Types","Types of Electricity Consumption could be configured here, total "+activities.size()+" rows",activities);
+		}catch (Exception e){
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+		}
+	}
 
     @CrossOrigin
     @PostMapping("/add")
     public Response addActivity(@RequestBody ElectricityConsumption electricityConsumption) {
 
 
-        try {
+		try {
             electricityConsumption.setGhgFootprint(calculateGHG(electricityConsumption));
+			electricityConsumption.setTimestamp(new Timestamp(new Date().getTime()));
             ElectricityConsumption activity = electricityConsumptionRepository.save(electricityConsumption);
             return new Response(OK, "Added .", "Electricity Consumption Added", activity);
         } catch (Exception e) {
