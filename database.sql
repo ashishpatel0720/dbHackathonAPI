@@ -87,9 +87,9 @@ LOCK TABLES `green_activity` WRITE;
 
 INSERT INTO `green_activity` ( `user_email`, `type`,`ghg_footprint`)
 VALUES
-('ashish@db.com','used_public_transport','-100'),
-('ashish@db.com','used_bicycle','-2000'),
-('ashish@db.com','planted_tree','-100000');
+('ashish@db.com','used-public-transport','-100'),
+('ashish@db.com','used-bicycle','-2000'),
+('ashish@db.com','planted-a-tree','-100000');
 
 /*!40000 ALTER TABLE `green_activity` ENABLE KEYS */;
 UNLOCK TABLES;
