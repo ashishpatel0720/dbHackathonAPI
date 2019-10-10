@@ -12,9 +12,7 @@ import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.db.dbhackathonapi.StatusCodeEnum.ERROR;
@@ -68,10 +66,22 @@ public class ActivityController {
 								return travelActivity;
 							}).collect(Collectors.toList())
 			);
-			return new Response(OK,"All Activity data","All Activity Data has "+activities.size()+" rows",activities);
+            Collections.sort(activities,new Comparator<Activity>() {
+                @Override
+                public int compare(Activity o1, Activity o2) {
+                    long t1 = o1.getTimestamp() != null ? o1.getTimestamp().getTime() : 0L;
+                    long t2 = o2.getTimestamp() != null ? o2.getTimestamp().getTime() : 0L;
+                    if (t2 > t1)
+                        return 1;
+                    else if (t1 > t2)
+                        return -1;
+                    else
+                        return 0;
+                }});
+            return new Response(OK, "All Activity data", "All Activity Data has " + activities.size() + " rows", activities);
 		}catch (Exception e){
-			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
-		}
+        return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+       }
 	}
 
     @CrossOrigin
