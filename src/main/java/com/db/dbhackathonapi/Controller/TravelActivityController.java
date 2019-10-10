@@ -5,13 +5,13 @@ import com.db.dbhackathonapi.Constants;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
 import com.db.dbhackathonapi.Tables.TravelActivity;
 import com.db.dbhackathonapi.Tables.User;
+import com.db.dbhackathonapi.Utils;
 import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.*;
 
 import static com.db.dbhackathonapi.StatusCodeEnum.*;
 

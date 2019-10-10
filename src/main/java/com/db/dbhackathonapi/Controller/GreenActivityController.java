@@ -2,15 +2,19 @@ package com.db.dbhackathonapi.Controller;
 
 
 import com.db.dbhackathonapi.Constants;
+import com.db.dbhackathonapi.Repository.ElectricityConsumptionRepository;
 import com.db.dbhackathonapi.Repository.GreenActivityRepository;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
+import com.db.dbhackathonapi.Tables.ElectricityConsumption;
 import com.db.dbhackathonapi.Tables.GreenActivity;
 import com.db.dbhackathonapi.Tables.TravelActivity;
 import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
