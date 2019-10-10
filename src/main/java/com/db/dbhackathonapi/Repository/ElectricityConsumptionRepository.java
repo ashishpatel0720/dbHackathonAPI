@@ -20,6 +20,6 @@ public interface ElectricityConsumptionRepository extends CrudRepository<Electri
     @Transactional
     @Modifying
     @Query(value="update electricity_consumption t set t.appliance_type=:appliance_type, t.duration_minutes =:duration_minutes, t.contributors =:contributors , t.ghg_footprint=:ghg_footprint where t.id=:id",nativeQuery = true)
-    void modifyUserInfoById(@Param("appliance_type") String appliance_type, @Param("duration_minutes") int duration_minutes, @Param("contributors") int contributors, @Param("ghg_footprint") int ghg_footprint, @Param("id") int id);
+    void modifyUserInfoById(@Param("appliance_type") String appliance_type, @Param("duration_minutes") String duration_minutes, @Param("contributors") int contributors, @Param("ghg_footprint") String ghg_footprint, @Param("id") int id);
 
 }

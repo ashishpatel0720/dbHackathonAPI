@@ -21,9 +21,10 @@ public class TravelActivity extends Activity {
 
     private String userEmail;
     private String medium;
-    private int distance;
+    private String fuelType;
+    private String distance;
     private int contributors;
-    private int ghgFootprint;
+    private String ghgFootprint;
     private Timestamp timestamp;
 
 }

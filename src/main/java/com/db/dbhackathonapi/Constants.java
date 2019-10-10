@@ -5,6 +5,7 @@ import com.db.dbhackathonapi.interfaces.Activity;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import static java.util.Collections.reverseOrder;
@@ -15,7 +16,10 @@ public  final class Constants {
     public static final List<String> travelActivityList= Arrays.asList("Bicycle", "Motor Bike","Car","Flight","Cab","Bus","Other");
     public static final List<String> electricApplianceList= Arrays.asList("Fridge", "Ac","Washing Machine","Geyser","Other");
 
+    HashMap<String, String> metaData = new HashMap<String, String>();
+
+
     //TODO: add comparator to all activity
-   public static final Comparator<Activity> ACTIVITY_COMPARATOR = comparing(Activity::getTimestamp);
+    public static final Comparator<Activity> ACTIVITY_COMPARATOR = comparing(Activity::getTimestamp);
 
 }

@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Setter
 public class Activity {
          String userEmail;
-         int ghgFootprint;
+         String ghgFootprint;
          String type;
          Timestamp timestamp;
 }

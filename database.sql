@@ -51,9 +51,10 @@ CREATE TABLE `travel_activity` (
                         `id` int auto_increment primary key ,
                         `user_email` text not null ,
                         `medium` text not null ,  # bike, cycling ,other etc.
-                        `distance` int not null ,
+                        `fuel_type` text null ,  # petrol, diesel ,other etc.
+                        `distance` text not null ,
                         `contributors` int not null, # 1 for 100 % etc - ghg_footprint/contribution
-                        `ghg_footprint` int not null,
+                        `ghg_footprint` text null,
                         `timestamp` TIMESTAMP default current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 UNLOCK TABLES;
@@ -62,10 +63,10 @@ UNLOCK TABLES;
 LOCK TABLES `travel_activity` WRITE;
 /*!40000 ALTER TABLE `travel_activity` DISABLE KEYS */;
 
-INSERT INTO `travel_activity` ( `user_email`, `medium`,`distance`, `contributors`, `ghg_footprint`)
+INSERT INTO `travel_activity` ( `user_email`, `medium`, `fuel_type`, `distance`, `contributors`)
 VALUES
-('ashish@db.com','bike','10','1','999'),
-('ashish@db.com','bicycle','2','1','0');
+('ashish@db.com','bike','petrol','10','1'),
+('ashish@db.com','bicycle',null,'2','1');
 
 /*!40000 ALTER TABLE `travel_activity` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -77,7 +78,7 @@ CREATE TABLE `green_activity` (
                         `id` int auto_increment primary key ,
                         `user_email` text not null ,
                         `type` text not null ,
-                        `ghg_footprint` int not null,
+                        `suggested_plant_score` text null,
                         `timestamp` TIMESTAMP default current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -85,11 +86,11 @@ LOCK TABLES `green_activity` WRITE;
 /*!40000 ALTER TABLE `green_activity` DISABLE KEYS */;
 
 
-INSERT INTO `green_activity` ( `user_email`, `type`,`ghg_footprint`)
+INSERT INTO `green_activity` ( `user_email`, `type`)
 VALUES
-('ashish@db.com','used-public-transport','-100'),
-('ashish@db.com','used-bicycle','-2000'),
-('ashish@db.com','planted-a-tree','-100000');
+('ashish.patel@db.com','used-public-transport'),
+('ashish.patel@db.com','used-bicycle'),
+('ashish.patel@db.com','planted-a-tree');
 
 /*!40000 ALTER TABLE `green_activity` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -105,7 +106,7 @@ CREATE TABLE `electricity_consumption` (
                                   `appliance_type` text not null ,
                                   `duration_minutes` text not null ,
                                   `contributors` text not null ,
-                                  `ghg_footprint` int not null,
+                                  `ghg_footprint` text null,
                                   `timestamp` TIMESTAMP default current_timestamp
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -113,9 +114,9 @@ LOCK TABLES `electricity_consumption` WRITE;
 /*!40000 ALTER TABLE `electricity_consumption` DISABLE KEYS */;
 
 
-INSERT INTO `electricity_consumption` ( `user_email`, `appliance_type`,`duration_minutes`,`contributors`,`ghg_footprint`)
+INSERT INTO `electricity_consumption` ( `user_email`, `appliance_type`,`duration_minutes`,`contributors`)
 VALUES
-('ashish@db.com','fridge','90','3','100'),
-('ashish@db.com','washing_machine','45','1','500');
+('ashish@db.com','fridge','90','3'),
+('ashish@db.com','washing_machine','45','1');
 /*!40000 ALTER TABLE `electricity_consumption` ENABLE KEYS */;
 UNLOCK TABLES;
