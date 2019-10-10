@@ -12,6 +12,8 @@ import com.db.dbhackathonapi.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -61,14 +63,14 @@ public class GreenActivityController {
     @PostMapping("/add")
     public Response addActivity(@RequestBody GreenActivity greenActivity) {
 
-        try {
-            greenActivity.setSuggestedPlantScore(calPlantScore(greenActivity));
-            GreenActivity activity = greenActivityRepository.save(greenActivity);
-            return new Response(OK, "Added .", "Green Activity Added", activity);
-        } catch (Exception e) {
-            return new Response(ERROR, "Error", Arrays.toString(e.getStackTrace()), null);
-        }
-    }
+		try {
+            greenActivity.setTimestamp(new Timestamp(new Date().getTime()));
+		    GreenActivity activity = greenActivityRepository.save(greenActivity);
+			return new Response(OK, "Added .", "Green Activity Added", activity);
+		} catch (Exception e) {
+			return new Response(ERROR, "Error", Arrays.toString(e.getStackTrace()), null);
+		}
+	}
 
 
     private String calPlantScore(GreenActivity greenActivity) {

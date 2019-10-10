@@ -54,7 +54,7 @@ public class UserController {
 			return new Response(OK, "Signed Up.", "You have successfully Signed Up", userOutput);
 		}
 		catch(Exception e){
-			return new Response(ERROR, "Error", Arrays.toString(e.getStackTrace()), null);
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
 		}
 }
 

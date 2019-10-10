@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import static com.db.dbhackathonapi.StatusCodeEnum.ERROR;
 import static com.db.dbhackathonapi.StatusCodeEnum.OK;
 
@@ -40,7 +39,7 @@ public class ActivityController {
     @CrossOrigin
     @GetMapping(value = "/{userEmail}")
     public Response getAllActivityData(@PathVariable String userEmail) {
-        try {
+        try { //map - travelActivity.setType("travel-activity")
             List<Activity> activities = new ArrayList<>();
             activities.addAll(travelActivityRepository.findAllByUserEmail(userEmail));
             activities.addAll(greenActivityRepository.findAllByUserEmail(userEmail));
