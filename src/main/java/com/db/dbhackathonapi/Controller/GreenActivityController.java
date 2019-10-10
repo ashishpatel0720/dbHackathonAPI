@@ -50,8 +50,18 @@ public class GreenActivityController {
             activities.forEach(activity -> {
                 greenActivities.add(activity);
             });
-            Collections.sort(greenActivities, new CompareByTimeStamp());
-
+            Collections.sort(greenActivities,new Comparator<GreenActivity>() {
+            @Override
+            public int compare(GreenActivity o1, GreenActivity o2) {
+                long t1 = o1.getTimestamp() != null ? o1.getTimestamp().getTime() : 0L;
+                long t2 = o2.getTimestamp() != null ? o2.getTimestamp().getTime() : 0L;
+                if (t2 > t1)
+                    return 1;
+                else if (t1 > t2)
+                    return -1;
+                else
+                    return 0;
+            }});
             return new Response(OK, "Green Activity data", "Green activity Data has " + greenActivities.size() + " rows", greenActivities);
         } catch (Exception e) {
             return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
@@ -97,7 +107,12 @@ public class GreenActivityController {
 
 
     private String calPlantScore(GreenActivity greenActivity) {
-
+        /*Optional<TravelActivity> travelActivity = travelActivityRepository.findById(greenActivity.getId());
+        Optional<ElectricityConsumption> electricityConsumption = electricityConsumptionRepository.findById(greenActivity.getId());
+*/
+  /*      float plantScore = ((travelActivity.isPresent() && travelActivity.get() != null && travelActivity.get().getGhgFootprint() !=null ? Float.parseFloat(travelActivity.get().getGhgFootprint()) : 0) +
+                             (electricityConsumption.isPresent() && electricityConsumption.get() != null && electricityConsumption.get().getGhgFootprint() !=null  ? Float.parseFloat(electricityConsumption.get().getGhgFootprint()) : 0)) / 5;
+*/
         List<TravelActivity> travelActivities = travelActivityRepository.findAllByUserEmail(greenActivity.getUserEmail());
         List<ElectricityConsumption> electricityConsumptions = electricityConsumptionRepository.findAllByUserEmail(greenActivity.getUserEmail());
         float travelScore = 0.0f;

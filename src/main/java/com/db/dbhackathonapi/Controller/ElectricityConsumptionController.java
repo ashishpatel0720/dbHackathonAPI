@@ -1,6 +1,7 @@
 package com.db.dbhackathonapi.Controller;
 
 
+import com.db.dbhackathonapi.CompareByTimeStamp;
 import com.db.dbhackathonapi.Constants;
 import com.db.dbhackathonapi.Repository.ElectricityConsumptionRepository;
 import com.db.dbhackathonapi.Repository.TravelActivityRepository;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.text.DateFormatSymbols;
 import java.util.*;
 import java.util.Date;
 
@@ -37,6 +39,18 @@ public class ElectricityConsumptionController {
         System.out.println("hi hello ");
         try {
             List<ElectricityConsumption> activities = electricityConsumptionRepository.findAllByUserEmail(userEmail);
+            Collections.sort(activities,new Comparator<ElectricityConsumption>() {
+                @Override
+                public int compare(ElectricityConsumption o1, ElectricityConsumption o2) {
+                    long t1 = o1.getTimestamp() != null ? o1.getTimestamp().getTime() : 0L;
+                    long t2 = o2.getTimestamp() != null ? o2.getTimestamp().getTime() : 0L;
+                    if (t2 > t1)
+                        return 1;
+                    else if (t1 > t2)
+                        return -1;
+                    else
+                        return 0;
+                }});
             return new Response(OK, "Electricity data", "Electricity Data has " + activities.size() + " rows", activities);
 
         } catch (Exception e) {
@@ -143,4 +157,47 @@ public class ElectricityConsumptionController {
             return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), electricityConsumption);
         }
     }
+
+    @CrossOrigin
+    @GetMapping(value = "/sixMonthAvgScore/{userEmail}")
+    public Response getSixMonthAvgScore( @PathVariable String userEmail) {
+
+        try {
+            List<ElectricityConsumption> electricityConsumptions = electricityConsumptionRepository.findAllByUserEmail(userEmail);
+            Map<String ,String> dataMap =  new HashMap<>();
+            Map<String,String> monthMap = new HashMap<>();
+            int j=1;
+            String[] shortMonths = new DateFormatSymbols().getShortMonths();
+            for (String shortMonth : shortMonths) {
+                monthMap.put(String.valueOf(j),shortMonth);
+                j++;
+            }
+            int month = new Timestamp(System.currentTimeMillis()).getMonth();
+            for(int i=month-6; i<month;i++)
+                dataMap.put(String.valueOf(monthMap.get(String.valueOf(i))),"0");
+
+            for(ElectricityConsumption electricityConsumption :electricityConsumptions)
+            {
+                if(electricityConsumption.getTimestamp()!=null)
+                {
+                    //listMonthMap.put(String.valueOf(travelActivity.getTimestamp().getMonth()),String.valueOf(1));
+                    if(electricityConsumption.getTimestamp().getMonth() > (new Timestamp(System.currentTimeMillis()).getMonth() - 6))
+                    {
+                        if(dataMap.containsKey(String.valueOf(electricityConsumption.getTimestamp().getMonth())))
+                            dataMap.put(monthMap.get(String.valueOf(electricityConsumption.getTimestamp().getMonth())),
+                                    String.valueOf((Float.parseFloat(dataMap.get(String.valueOf(electricityConsumption.getTimestamp().getMonth())))
+                                            +(electricityConsumption.getGhgFootprint()!=null?Float.parseFloat(electricityConsumption.getGhgFootprint()):0.0f))));
+                        else
+                            dataMap.put(monthMap.get(String.valueOf(electricityConsumption.getTimestamp().getMonth())),String.valueOf(electricityConsumption.getGhgFootprint()));
+                    }
+                }
+            }
+
+            return new Response(OK, "Calculated .", "Travel Activity Calculated", dataMap);
+        }
+        catch (Exception e) {
+            return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+        }
+    }
+
 }
