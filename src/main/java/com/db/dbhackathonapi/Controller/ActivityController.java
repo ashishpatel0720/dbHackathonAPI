@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.db.dbhackathonapi.StatusCodeEnum.ERROR;
 import static com.db.dbhackathonapi.StatusCodeEnum.OK;
 
@@ -36,19 +38,41 @@ public class ActivityController {
     @Autowired
     private ElectricityConsumptionRepository electricityConsumptionRepository;
 
-    @CrossOrigin
-    @GetMapping(value = "/{userEmail}")
-    public Response getAllActivityData(@PathVariable String userEmail) {
-        try { //map - travelActivity.setType("travel-activity")
-            List<Activity> activities = new ArrayList<>();
-            activities.addAll(travelActivityRepository.findAllByUserEmail(userEmail));
-            activities.addAll(greenActivityRepository.findAllByUserEmail(userEmail));
-            activities.addAll(electricityConsumptionRepository.findAllByUserEmail(userEmail));
-            return new Response(OK, "All Activity data", "All Activity Data has " + activities.size() + " rows", activities);
-        } catch (Exception e) {
-            return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
-        }
-    }
+	@CrossOrigin
+	@GetMapping(value = "/{userEmail}")
+	public Response getAllActivityData( @PathVariable String userEmail){
+		try{
+			List<Activity>activities=new ArrayList<>();
+			activities.addAll(
+					travelActivityRepository.findAllByUserEmail(
+							userEmail).stream()
+							.map(travelActivity -> {
+								travelActivity.setType("travel-activity");
+								return travelActivity;
+							}).collect(Collectors.toList())
+			);
+
+			activities.addAll(
+					greenActivityRepository.findAllByUserEmail(
+							userEmail).stream()
+							.map(travelActivity -> {
+								travelActivity.setType("green-activity");
+								return travelActivity;
+							}).collect(Collectors.toList())
+			);
+			activities.addAll(
+					electricityConsumptionRepository.findAllByUserEmail(
+							userEmail).stream()
+							.map(travelActivity -> {
+								travelActivity.setType("electricity-consumption");
+								return travelActivity;
+							}).collect(Collectors.toList())
+			);
+			return new Response(OK,"All Activity data","All Activity Data has "+activities.size()+" rows",activities);
+		}catch (Exception e){
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+		}
+	}
 
     @CrossOrigin
     @GetMapping(value = "/score/{userEmail}") //monthly score
@@ -70,23 +94,21 @@ public class ActivityController {
             }
 
             return new Response(OK, "All Activity Score", "All Activity Score ", (travelScore + electScore));
-        } catch (Exception e) {
-            return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
-        }
-    }
-
-    @CrossOrigin
-    @GetMapping(value = "/types")
-    public Response getAllActivityTypes() {
-        try {
-            List<String> activities = new ArrayList<>();
-            activities.addAll(Constants.greenActivityList);
-            activities.addAll(Constants.travelActivityList);
-            activities.addAll(Constants.electricApplianceList);
-            return new Response(OK, "All Activity Types", "Types of All activities are total " + activities.size() + " rows", activities);
-        } catch (Exception e) {
-            return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
-        }
-    }
-
+		}catch (Exception e){
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+		}
+	}
+	@CrossOrigin
+	@GetMapping(value = "/types")
+	public Response getAllActivityTypes( ){
+		try{
+			List<String>activities=new ArrayList<>();
+			activities.addAll(Constants.greenActivityList);
+			activities.addAll(Constants.travelActivityList);
+			activities.addAll(Constants.electricApplianceList);
+			return new Response(OK,"All Activity Types","Types of All activities are total "+activities.size()+" rows",activities);
+		}catch (Exception e){
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+		}
+	}
 }

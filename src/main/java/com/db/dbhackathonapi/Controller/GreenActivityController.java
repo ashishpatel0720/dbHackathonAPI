@@ -85,14 +85,15 @@ public class GreenActivityController {
     @PostMapping("/add")
     public Response addActivity(@RequestBody GreenActivity greenActivity) {
 
-		try {
-            greenActivity.setTimestamp(new Timestamp(new Date().getTime()));
-		    GreenActivity activity = greenActivityRepository.save(greenActivity);
-			return new Response(OK, "Added .", "Green Activity Added", activity);
-		} catch (Exception e) {
-			return new Response(ERROR, "Error", Arrays.toString(e.getStackTrace()), null);
-		}
-	}
+        try {
+            greenActivity.setSuggestedPlantScore(calPlantScore(greenActivity));
+			greenActivity.setTimestamp(new Timestamp(new Date().getTime()));
+            GreenActivity activity = greenActivityRepository.save(greenActivity);
+            return new Response(OK, "Added .", "Green Activity Added", activity);
+        } catch (Exception e) {
+			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), null);
+        }
+    }
 
 
     private String calPlantScore(GreenActivity greenActivity) {

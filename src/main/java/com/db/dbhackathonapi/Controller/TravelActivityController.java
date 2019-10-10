@@ -11,11 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static com.db.dbhackathonapi.StatusCodeEnum.*;
 
@@ -60,8 +56,8 @@ public class TravelActivityController {
 	public Response addActivity(@RequestBody TravelActivity travelActivity) {
 
 		try {
-            travelActivity.setTimestamp(new Timestamp(new Date().getTime()));
 			travelActivity.setGhgFootprint(calculateGHG(travelActivity));
+			travelActivity.setTimestamp(new Timestamp(new Date().getTime()));
 			TravelActivity activity = travelActivityRepository.save(travelActivity);
 			return new Response(OK, "Added .", "Travel Activity Added", activity);
 		} catch (Exception e) {
@@ -114,7 +110,6 @@ public class TravelActivityController {
 	public Response modifyActivity(@RequestBody TravelActivity travelActivity) {
 
 		System.out.println(travelActivity);
-
 		Optional<TravelActivity> u=travelActivityRepository.findById(travelActivity.getId());
 		if(!u.isPresent()) {
 			return new Response(WARNING,"Not Exists","Row Not Exists, Id:"+travelActivity.getId(),null);
@@ -135,7 +130,7 @@ public class TravelActivityController {
 		} catch (Exception e) {
 			return new Response(ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()), travelActivity);
 		}
-}
+	}
 
 private Optional<TravelActivity> getValidUser(TravelActivity travelActivity)
 {
