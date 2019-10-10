@@ -97,11 +97,10 @@ public class TravelActivityController {
 
         Map<String,String> applianceFactorsMap = utils.getMapFactors("metaData");
         Map<String,String> travelMediumMap = utils.getMapFactors("travelMedium");
-        float ghgValue = 0.0f;
         String travelFuelType = travelActivity.getFuelType()!=null ? travelActivity.getFuelType().toUpperCase(): "OTHER";
         String travelMedium = travelActivity.getMedium()!=null ? travelActivity.getMedium().toUpperCase(): "OTHER";
 
-        ghgValue = ((Float.parseFloat(travelMediumMap.get(travelMedium))* Float.parseFloat(travelActivity.getDistance()))/travelActivity.getContributors()
+       float ghgValue = ((Float.parseFloat(travelMediumMap.get(travelMedium))* Float.parseFloat(travelActivity.getDistance()))/travelActivity.getContributors()
                         * Float.parseFloat(applianceFactorsMap.get(travelFuelType)))/ 908;
 
         return String.valueOf(ghgValue);
@@ -122,6 +121,7 @@ public class TravelActivityController {
 			travelActivity.setGhgFootprint(calculateGHG(travelActivity));
 			travelActivityRepository.modifyUserInfoById(
 					travelActivity.getMedium(),
+					travelActivity.getFuelType(),
 					travelActivity.getContributors(),
 					travelActivity.getDistance(),
 					travelActivity.getGhgFootprint(),
